@@ -1,1 +1,1 @@
-web: java -jar target/student.jar
+web: java -jar target/student-0.0.1-SNAPSHOT.jar
