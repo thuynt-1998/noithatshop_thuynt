@@ -1,0 +1,134 @@
+package com.doan.student.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+@Entity
+@Table(name = "order_cart" ,uniqueConstraints = {
+        @UniqueConstraint(columnNames = "code", name = "uniqueCode")})
+public class OrderCartEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "code")
+    private String code;
+    @Column(name = "name")
+    private String nameCustomer;
+    @Column(name = "phone")
+    private String phoneCustomer;
+    @Column(name = "address")
+    private String address;
+    @Column(name = "status")
+    private String status;
+    @Column(name = "note")
+    private String note;
+    @Column(name = "payments")
+    private String payments;
+    @Column(name = "transport_free")
+    private BigDecimal transportFree;
+
+    @ManyToOne
+    @JoinColumn(name = "by_customer")
+    private CustomerEntity byCustomer;
+
+//
+    @JsonIgnore
+    @OneToMany(mappedBy = "orderCart")
+    private final List<OrderCartDetailEntity> orderCartDetail= new ArrayList<>();
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getNameCustomer() {
+        return nameCustomer;
+    }
+
+    public void setNameCustomer(String nameCustomer) {
+        this.nameCustomer = nameCustomer;
+    }
+
+    public String getPhoneCustomer() {
+        return phoneCustomer;
+    }
+
+    public void setPhoneCustomer(String phoneCustomer) {
+        this.phoneCustomer = phoneCustomer;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getPayments() {
+        return payments;
+    }
+
+    public void setPayments(String payments) {
+        this.payments = payments;
+    }
+
+    public BigDecimal getTransportFree() {
+        return transportFree;
+    }
+
+    public void setTransportFree(BigDecimal transportFree) {
+        this.transportFree = transportFree;
+    }
+
+    public CustomerEntity getByCustomer() {
+        return byCustomer;
+    }
+
+    public void setByCustomer(CustomerEntity byCustomer) {
+        this.byCustomer = byCustomer;
+    }
+
+
+    public List<OrderCartDetailEntity> getOrderCartDetail() {
+        return orderCartDetail;
+    }
+}
