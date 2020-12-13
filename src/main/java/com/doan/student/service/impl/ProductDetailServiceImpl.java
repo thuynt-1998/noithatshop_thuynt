@@ -36,7 +36,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         List<ProductDetailDTO> list = new ArrayList<>();
         List<ProductDetailEntity> entities = productDetailRepository.findByProductId(id);
         for (ProductDetailEntity entity : entities){
-            list.add(productDetailConverter.EntityToDtoNoProduct(entity));
+            list.add(productDetailConverter.EntityToDto(entity));
         }
 
         return list;
