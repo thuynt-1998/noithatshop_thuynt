@@ -1,5 +1,7 @@
 package com.doan.student.payload.dto;
 
+import java.util.List;
+
 public class ProductDTO {
     private Long id;
     private String code;
@@ -12,6 +14,7 @@ public class ProductDTO {
     private String status;
 
     private ProductTypeDTO productType;
+    private List<ProductDetailDTO> productDetail;
 
     public Long getId() {
         return id;
@@ -92,5 +95,13 @@ public class ProductDTO {
 
     public void setSize(String size) {
         this.size = size;
+    }
+
+    public List<ProductDetailDTO> getProductDetail() {
+        return productDetail;
+    }
+
+    public void setProductDetail(List<ProductDetailDTO> productDetail) {
+        this.productDetail = productDetail;
     }
 }
