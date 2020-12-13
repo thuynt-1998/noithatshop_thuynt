@@ -10,12 +10,10 @@ import com.doan.student.service.ProductServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -40,5 +38,11 @@ public class ProductDetailController {
             imageServices.save(entity);
         }
         return new ResponseEntity<Object>(productDetailDTO1, HttpStatus.OK);
+    }
+    @GetMapping("/get/product/{id}")
+    public ResponseEntity<Object> getProduct(@PathVariable("id")Long id){
+
+        List<ProductDetailDTO> dto = productDetailService.getProductDetailByProductId(id);
+        return  new ResponseEntity<Object>(dto, HttpStatus.OK);
     }
 }
