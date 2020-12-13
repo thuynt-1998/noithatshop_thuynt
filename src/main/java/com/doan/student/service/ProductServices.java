@@ -11,4 +11,5 @@ public interface ProductServices {
     ProductDTO saveProduct(ProductDTO dto);
     String existsByCode(String code);
     List<ProductDTO> getAllProductNew();
+    List<ProductDTO> getProductByType(Long id);
 }
