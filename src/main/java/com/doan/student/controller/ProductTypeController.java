@@ -23,7 +23,6 @@ public class ProductTypeController {
         ProductTypeDTO roomDTO1= productTypeServices.saveProductType(productTypeDto);
         return new ResponseEntity<Object>(roomDTO1, HttpStatus.OK);
     }
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     @GetMapping("/admin/getAll/product-type")
     public ResponseEntity<List<ProductTypeDTO>> getAllRoom(){
         return new ResponseEntity<List<ProductTypeDTO>>(productTypeServices.getAllProductType(), HttpStatus.OK );
