@@ -30,12 +30,17 @@ public class ProductServiceImpl implements ProductServices {
 
     @Override
     public List<ProductDTO> getAllProductNew() {
-        List<ProductEntity> entities= productRepository.findTop10ByOrderByCreatedDateDesc();
+        List<ProductEntity> entities= productRepository.findTop10ByDetailImageIsNotNullAndDetailIsNotNullOrderByCreatedDateDesc();
         List<ProductDTO> list = new ArrayList<>();
         for (ProductEntity entity: entities){
             list.add(productConverter.EntityToDto(entity));
         }
         return list;
+//        List<ProductDTO> list = new ArrayList<>();
+
+
+
+
     }
 
     @Override

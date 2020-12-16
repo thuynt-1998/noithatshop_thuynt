@@ -14,4 +14,5 @@ public interface ProductDetailRepository extends JpaRepository<ProductDetailEnti
     List<ProductDetailEntity> findByProductId(Long id);
     Boolean existsByCode(String code);
     ProductDetailEntity findByCode(String code);
+//    List<ProductDetailEntity> findByByOrderByProductCreatedDateDescByGroupByProduct();
 }
