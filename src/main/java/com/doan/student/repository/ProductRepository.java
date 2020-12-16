@@ -15,7 +15,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity,Long> {
     ProductEntity getOne(Long id);
     Boolean existsByCode(String code);
     ProductEntity findByCode(String code);
-    List<ProductEntity> findTop10ByDetailImageIsNotNullAndDetailIsNotNullOrderByCreatedDateDesc();
+    List<ProductEntity> findTop10DistinctionByDetailImageIsNotNullOrderByCreatedDateDesc();
     List<ProductEntity> findByTypeId(Long id);
 
 }
