@@ -13,5 +13,7 @@ public interface CustomerRepository  extends JpaRepository<CustomerEntity, Long>
     CustomerEntity getOne(Long id);
     Boolean existsByCode(String code);
     CustomerEntity findByUserEntityUsername(String username);
+    Boolean existsByAccount(String account);
+    void deleteByUserEntityUsername(String username);
 
 }

@@ -43,7 +43,7 @@ public class OrderCartController {
             dtoDetail.setNumber(cart.getNumber());
             dtoDetail.setProductDetail(cart.getProductDetail());
             orderCartDetailService.saveOrderCartDetail(dtoDetail, orderCartDTO);
-            cartServices.deleteCart(cart);
+            cartServices.deleteCart(cart.getId());
         }
         return new ResponseEntity<Object>(orderCartDTO, HttpStatus.OK);
     }

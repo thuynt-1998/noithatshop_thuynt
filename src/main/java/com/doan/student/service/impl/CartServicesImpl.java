@@ -9,6 +9,7 @@ import com.doan.student.service.CartServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,9 +23,21 @@ public class CartServicesImpl implements CartServices {
     private CustomerRepository customerRepository;
     @Override
     public CartDTO saveCart(CartDTO dto, String username) {
+        CartDTO cartDTO = new CartDTO();
+        if(findByCode(dto.getCode())=="true")
+        {
+            CartEntity cartEntity= repository.findByCode(dto.getCode());
+            BigInteger number = cartEntity.getNumber().add(dto.getNumber());
+            dto.setNumber(number);
+            dto.setId(cartEntity.getId());
+            cartDTO=cartConverter.EntityToDto(repository.save(cartConverter.updateEntity(dto,cartEntity) ));
+        }
+        else{
+            cartDTO= cartConverter.EntityToDto(repository.save(cartConverter.DtoToEntity(dto,customerRepository.findByUserEntityUsername(username))));
 
-        return findByCode(dto.getCode())=="true"? cartConverter.EntityToDto(repository.findByCode(dto.getCode()))
-                : cartConverter.EntityToDto(repository.save(cartConverter.DtoToEntity(dto,customerRepository.findByUserEntityUsername(username))));
+        }
+
+        return cartDTO;
     }
 
     @Override
@@ -33,8 +46,8 @@ public class CartServicesImpl implements CartServices {
     }
 
     @Override
-    public String deleteCart(CartDTO cartDTO) {
-        repository.delete(cartConverter.updateEntity(cartDTO, new CartEntity()));
+    public String deleteCart(Long id) {
+        repository.deleteById(id);
         return "true";
     }
 

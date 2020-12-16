@@ -1,5 +1,7 @@
 package com.doan.student.controller;
 
+import com.doan.student.entity.UserEntity;
+import com.doan.student.payload.dto.CustomerDTO;
 import com.doan.student.payload.request.LoginRequest;
 import com.doan.student.payload.request.SignUpAdminRequest;
 import com.doan.student.payload.request.SignUpCustomerRequest;
@@ -14,6 +16,7 @@ import com.doan.student.service.impl.UserDetailsImpl;
 import com.doan.student.untils.JwtTokenUtil;
 import io.jsonwebtoken.impl.DefaultClaims;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -21,6 +24,9 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -80,6 +86,10 @@ public class AuthenticationController {
         userDetailsService.saveAdmin(equest);
         return ResponseEntity.ok("Admin registered successfully!");
     }
+    @GetMapping("/exixts/account")
+    public  ResponseEntity<Object> existsByAccount(@RequestParam("account") String account){
+        return new ResponseEntity<Object>(customerService.ExistsByAccount(account), HttpStatus.OK);
+    }
     @RequestMapping(value = "/signup/customer" , method = RequestMethod.POST)
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpCustomerRequest request) throws Exception {
 
@@ -87,6 +97,22 @@ public class AuthenticationController {
         return ResponseEntity.ok("User registered successfully!");
     }
 
+    @Transactional
+    @RequestMapping(value = "/delete/customer" , method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteCustomer(@RequestParam("username") String username) throws Exception {
+        customerService.deleteCustomer(username);
+        userService.deleteUser(username);
+        return ResponseEntity.ok("User registered successfully!");
+    }
+    @RequestMapping(value = "/update/customer" , method = RequestMethod.PUT)
+    public ResponseEntity<?> updateCustomer(@RequestBody CustomerDTO customerDTO) throws Exception {
+        return new ResponseEntity<Object>(customerService.updateCustomer(customerDTO), HttpStatus.OK);
+    }
+    @RequestMapping(value = "/update/userpassword" , method = RequestMethod.PUT)
+    public ResponseEntity<?> updatePassword(@RequestParam("password") String password) throws Exception {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return new ResponseEntity<Object>(userService.updatePassword(password,authentication.getName() ), HttpStatus.OK);
+    }
 
 //
 

@@ -22,6 +22,7 @@ public class CartController {
     @PostMapping("/customer/choose/cart")
     public ResponseEntity<Object> saveCart(@Valid @RequestBody CartDTO dto){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         return new ResponseEntity<Object>(cartServices.saveCart(dto, authentication.getName()), HttpStatus.OK);
     }
     @PreAuthorize("hasRole('ROLE_CLIENT')")
@@ -30,9 +31,9 @@ public class CartController {
         return new ResponseEntity<Object>(cartServices.updateCart(dto), HttpStatus.OK);
     }
     @PreAuthorize("hasRole('ROLE_CLIENT')")
-    @DeleteMapping("/customer/delete/cart")
-    public ResponseEntity<Object> deleteCart(@RequestBody CartDTO dtos){
-        return new ResponseEntity<Object>(cartServices.deleteCart(dtos), HttpStatus.OK);
+    @DeleteMapping("/customer/delete/cart/{id}")
+    public ResponseEntity<Object> deleteCart(@PathVariable("id") Long id){
+        return new ResponseEntity<Object>(cartServices.deleteCart(id), HttpStatus.OK);
     }
     @GetMapping("/customer/getAll/cart")
     public ResponseEntity<Object> getAll(){

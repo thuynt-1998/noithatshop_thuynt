@@ -1,6 +1,7 @@
 package com.doan.student.converter;
 
 import com.doan.student.entity.CustomerEntity;
+import com.doan.student.entity.UserEntity;
 import com.doan.student.payload.dto.CustomerDTO;
 import org.springframework.stereotype.Component;
 
@@ -38,5 +39,17 @@ public class CustomerConverter {
         entity.setAddress(dto.getAddress());
         entity.setCode(dto.getCode());
         return entity;
+    }
+    public  CustomerEntity updateEntity(CustomerDTO dto, UserEntity userEntity){
+        CustomerEntity entity = new CustomerEntity();
+        entity.setId(dto.getId());
+        entity.setCode(dto.getCode());
+        entity.setAddress(dto.getAddress());
+        entity.setAccount(dto.getAccount());
+        entity.setDateOfBirth(dto.getDateOfBirth());
+        entity.setGender(dto.getGender());
+        entity.setName(entity.getName());
+        entity.setUserEntity(userEntity);
+        return  entity;
     }
 }

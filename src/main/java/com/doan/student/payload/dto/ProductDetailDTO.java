@@ -16,7 +16,7 @@ public class ProductDetailDTO {
     private String status;
     private ProductDTO product;
 
-    private List<String> images;
+    private List<ImageDTO> images;
 
     public Long getId() {
         return id;
@@ -82,12 +82,11 @@ public class ProductDetailDTO {
         this.product = product;
     }
 
-    public List<String> getImages() {
+    public List<ImageDTO> getImages() {
         return images;
     }
 
-    public void setImages(List<String> images) {
+    public void setImages(List<ImageDTO> images) {
         this.images = images;
     }
-
 }

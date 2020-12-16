@@ -32,8 +32,8 @@ public class ProductDetailController {
         ProductDetailDTO productDetailDTO1= productDetailService.saveProductDetail(productDetailDTO,dto );
         for (int i=0; i<productDetailDTO.getImages().size(); i++){
             ImageEntity entity = new ImageEntity();
-            entity.setCode(productDetailDTO.getCode()+ (i+1));
-            entity.setLink(productDetailDTO.getImages().get(i));
+            entity.setCode(productDetailDTO.getCode()+ (i));
+            entity.setLink(productDetailDTO.getImages().get(i).getLink());
             entity.setProductDetail(productDetailConverter.DtoToEntityExistProduct(productDetailDTO1) );
             imageServices.save(entity);
         }

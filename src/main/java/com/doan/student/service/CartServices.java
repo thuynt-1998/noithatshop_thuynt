@@ -10,7 +10,7 @@ import java.util.List;
 public interface CartServices  {
     CartDTO saveCart(CartDTO dto, String username);
     CartDTO updateCart(CartDTO dto);
-    String deleteCart(CartDTO cartDTOS);
+    String deleteCart(Long  id);
     List<CartDTO > getAllCart(String account);
     String findByCode(String code);
 }
