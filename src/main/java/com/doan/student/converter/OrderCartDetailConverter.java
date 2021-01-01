@@ -20,31 +20,31 @@ public class OrderCartDetailConverter {
         OrderCartDetailDTO dto =new OrderCartDetailDTO();
         dto.setId(entity.getId());
         dto.setCode(entity.getCode());
-        dto.setProductDetail(productDetailConverter.EntityToDto(entity.getProductDetail()));
+        dto.setProduct(productDetailConverter.EntityToDtoCart(entity.getProductDetail()));
         dto.setNumber(entity.getNumber());
         dto.setPrice(entity.getPrice());
-
         return  dto;
     }
-    public OrderCartDetailEntity DtoToEntity(OrderCartDetailDTO dto,  OrderCartDTO dtoOrder){
+    public OrderCartDetailEntity DtoToEntity(OrderCartDetailDTO dto){
         OrderCartDetailEntity entity =  new OrderCartDetailEntity();
         entity.setId(dto.getId());
         entity.setCode(dto.getCode());
         entity.setNumber(dto.getNumber());
         entity.setPrice(dto.getPrice());
-        entity.setOrderCart(orderCartConverter.GetDtoToEntity(dtoOrder));
-        entity.setProductDetail(productDetailConverter.DtoToEntityExistProduct(dto.getProductDetail()));
+        entity.setOrderCart(orderCartConverter.DtoToEntity(dto.getOrderCart()));
+        entity.setProductDetail(productDetailConverter.DtoToEntityCart(dto.getProduct()));
         return entity;
     }
-    public OrderCartDetailEntity updateEntity(OrderCartDetailDTO dto,  OrderCartDetailEntity entity){
-        entity.setId(dto.getId());
-        entity.setCode(dto.getCode());
-        entity.setNumber(dto.getNumber());
-        entity.setPrice(dto.getPrice());
-        entity.setProductDetail(productDetailConverter.DtoToEntityExistProduct(dto.getProductDetail()));
-        entity.setStatus(dto.getStatus());
-        return entity;
-    }
+
+//    public OrderCartDetailEntity updateEntity(OrderCartDetailDTO dto,  OrderCartDetailEntity entity){
+//        entity.setId(dto.getId());
+//        entity.setCode(dto.getCode());
+//        entity.setNumber(dto.getNumber());
+//        entity.setPrice(dto.getPrice());
+//        entity.setProductDetail(productDetailConverter.DtoToEntityExistProduct(dto.getProductDetail()));
+//        entity.setStatus(dto.getStatus());
+//        return entity;
+//    }
 
 
 }

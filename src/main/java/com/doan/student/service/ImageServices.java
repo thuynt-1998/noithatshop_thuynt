@@ -1,10 +1,11 @@
 package com.doan.student.service;
 
 import com.doan.student.entity.ImageEntity;
+import com.doan.student.payload.dto.ImageDTO;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional(rollbackFor = Exception.class)
 
 public interface ImageServices {
-    ImageEntity save (ImageEntity entity);
+    String save (ImageDTO dto);
 }

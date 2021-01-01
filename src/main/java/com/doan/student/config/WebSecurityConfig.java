@@ -57,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 // dont authenticate this particular request
                 .authorizeRequests().antMatchers(  "/login/admin","/login/customer", "/signup/customer","/signup/admin",
-                "/image/upload","/image/get/{photo}","/getByRoomId/product-type","/get/product/{id}","/getAll/room","/getbytype/product/{id}",
+                "/image/upload","/image/get/{photo}","/getByRoomId/product-type","/getAll/room","/getbytype/product/{id}",
                 "/admin/getAll/product-type","/admin/getnew/product","/exixts/account"
         ).permitAll()
                 .and().authorizeRequests()

@@ -118,8 +118,8 @@ public class AuthenticationController {
 
 
 
-    @RequestMapping(value = "/refreshtoken", method = RequestMethod.GET)
-    public ResponseEntity<?> refreshtoken(HttpServletRequest request) throws Exception {
+
+    public JwtAdminResponse refreshtoken(HttpServletRequest request) throws Exception {
         // From the HttpRequest get the claims
         DefaultClaims claims = (io.jsonwebtoken.impl.DefaultClaims) request.getAttribute("claims");
 
@@ -127,7 +127,7 @@ public class AuthenticationController {
         String token = jwtTokenUtil.doGenerateRefreshToken(expectedMap, expectedMap.get("sub").toString());
         String username= jwtTokenUtil.getUsernameFromToken(token);
         List<String> roles= jwtTokenUtil.getRolesFromToken(token);
-        return ResponseEntity.ok(new JwtAdminResponse(token, username, roles));
+        return new JwtAdminResponse(token, username, roles);
     }
 
     public Map<String, Object> getMapFromIoJsonwebtokenClaims(DefaultClaims claims) {

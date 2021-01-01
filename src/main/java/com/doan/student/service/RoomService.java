@@ -8,7 +8,9 @@ import java.util.List;
 
 @Transactional(rollbackFor = Exception.class)
 public interface RoomService {
-    RoomDTO saveRoom(RoomDTO roomDTO);
+    String saveRoom(RoomDTO roomDTO);
     List<RoomDTO> getAllRoom();
     RoomEntity getOne(Long id);
+    String updateStatus(Long id, String status);
+    String existsByName(String name);
 }

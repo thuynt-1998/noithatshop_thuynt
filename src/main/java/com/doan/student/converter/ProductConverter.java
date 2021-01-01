@@ -29,7 +29,6 @@ public class ProductConverter {
         entity.setDescription(dto.getDescription());
         entity.setStatus(dto.getStatus());
         entity.setType(productTypeConverter.DtoToEntity(dto.getProductType()));
-
         return  entity;
     }
     public  ProductDTO EntityToDto(ProductEntity entity){
@@ -47,9 +46,25 @@ public class ProductConverter {
         List<ProductDetailDTO> list = new ArrayList<>();
         for(ProductDetailEntity en: entity.getDetail())
         {
-            list.add(productDetailConverter.EntityToDtoNoProduct(en));
+            list.add(productDetailConverter.EntityToDtoResponse(en));
         }
         dto.setProductDetail(list);
         return dto;
     }
+//    public  ProductDTO EntityToDtoCart(ProductEntity entity){
+//        ProductDTO dto = new ProductDTO();
+//        dto.setId(entity.getId());
+//        dto.setCode(entity.getCode());
+//        dto.setName(entity.getName());
+//        dto.setMaterial(entity.getMaterial());
+//        dto.setSize(entity.getSize());
+//        dto.setSource(entity.getSource());
+//        dto.setGuarantee(entity.getGuarantee());
+//        dto.setDescription(entity.getDescription());
+//        dto.setStatus(entity.getStatus());
+//        dto.setProductType(productTypeConverter.EntityToDto(entity.getType()));
+//
+//        return dto;
+//    }
+
 }

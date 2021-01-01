@@ -9,7 +9,11 @@ import java.util.List;
 
 public interface ProductServices {
     ProductDTO saveProduct(ProductDTO dto);
+    String existsByName(String code);
     String existsByCode(String code);
     List<ProductDTO> getAllProductNew();
     List<ProductDTO> getProductByType(Long id);
+    String updataStatus(Long id, String status);
+    String updateProduct(ProductDTO dto);
+    ProductDTO findByName(String name);
 }

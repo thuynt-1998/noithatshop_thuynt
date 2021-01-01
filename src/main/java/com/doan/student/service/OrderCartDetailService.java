@@ -6,8 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional(rollbackFor = Exception.class)
 public interface OrderCartDetailService {
-    OrderCartDetailDTO saveOrderCartDetail(OrderCartDetailDTO dto, OrderCartDTO dtoOrder);
+    String saveOrderCartDetail(OrderCartDetailDTO dto);
     String existsByCode(String code);
-    OrderCartDetailDTO updateOrderCart(OrderCartDetailDTO dto);
 
 }

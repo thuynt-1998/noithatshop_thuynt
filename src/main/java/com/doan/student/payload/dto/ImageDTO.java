@@ -4,7 +4,7 @@ public class ImageDTO {
     private Long id;
     private  String code;
     private  String link ;
-    private String status;
+    private ProductDetailDTO productDetail;
 
     public Long getId() {
         return id;
@@ -30,11 +30,11 @@ public class ImageDTO {
         this.link = link;
     }
 
-    public String getStatus() {
-        return status;
+    public ProductDetailDTO getProductDetail() {
+        return productDetail;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setProductDetail(ProductDetailDTO productDetail) {
+        this.productDetail = productDetail;
     }
 }

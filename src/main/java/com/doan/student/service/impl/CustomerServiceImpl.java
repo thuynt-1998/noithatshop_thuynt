@@ -1,5 +1,6 @@
 package com.doan.student.service.impl;
 
+import com.doan.student.common.Constant;
 import com.doan.student.converter.CustomerConverter;
 import com.doan.student.entity.CustomerEntity;
 import com.doan.student.entity.UserEntity;
@@ -25,20 +26,31 @@ public class CustomerServiceImpl  implements CustomerService {
 
     @Override
     public String ExistsByAccount(String account) {
-        return customerRepository.existsByAccount(account) ? "true": "false";
+        return customerRepository.existsByAccount(account) ? Constant.EXISTS : Constant.NO;
     }
 
     @Override
     public String deleteCustomer(String username) {
-        customerRepository.deleteByUserEntityUsername(username);
-        return "true";
+        try {
+            customerRepository.deleteByUserEntityUsername(username);
+            return  Constant.YES;
+        }
+        catch (Exception e){
+            return Constant.NO;
+        }
     }
 
     @Override
-    public CustomerDTO updateCustomer(CustomerDTO customerDTO) {
-        UserEntity entity= userRepository.findByUsername(customerDTO.getUsername()).get();
+    public String updateCustomer(CustomerDTO dto) {
+        try{
+            customerRepository.updateInfoCustomer(dto.getName(),
+                    dto.getAddress(), dto.getAccount(), dto.getDateOfBirth(), dto.getGender(),dto.getId());
+            return  Constant.YES;
+        }
+        catch (Exception e){
+            return  Constant.NO;
+        }
 
-        return customerConverter.EntityToDto(customerRepository.save(customerConverter.updateEntity(customerDTO, entity))) ;
     }
 
 

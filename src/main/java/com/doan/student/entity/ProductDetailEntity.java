@@ -1,5 +1,6 @@
 package com.doan.student.entity;
 
+import com.doan.student.common.Constant;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -130,4 +131,8 @@ public class ProductDetailEntity {
     }
 
 
+    @PrePersist
+    public void setPrevStatus(){
+        setStatus(Constant.STOP);
+    }
 }

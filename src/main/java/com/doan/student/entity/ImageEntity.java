@@ -1,5 +1,7 @@
 package com.doan.student.entity;
 
+import com.doan.student.common.Constant;
+
 import javax.persistence.*;
 
 @Entity
@@ -57,5 +59,9 @@ public class ImageEntity {
 
     public void setProductDetail(ProductDetailEntity productDetail) {
         this.productDetail = productDetail;
+    }
+    @PrePersist
+    public void setPrevStatus(){
+        setStatus(Constant.ACTIVE);
     }
 }

@@ -20,7 +20,7 @@ public class OrderCartConverter {
     @Autowired
     private OrderCartDetailConverter orderCartDetailConverter;
 
-    public OrderCartDTO EntityToDtoAll(OrderCartEntity entity){
+    public OrderCartDTO EntityToDtoResponse(OrderCartEntity entity){
         OrderCartDTO dto= new OrderCartDTO() ;
         dto.setId(entity.getId());
         dto.setCode(entity.getCode());
@@ -39,7 +39,7 @@ public class OrderCartConverter {
         dto.setStatus(entity.getStatus());
         return dto;
     }
-    public  OrderCartEntity DtoToEntity(OrderCartDTO dto,CustomerEntity customerEntity){
+    public  OrderCartEntity DtoToEntity(OrderCartDTO dto){
         OrderCartEntity entity = new OrderCartEntity();
         entity.setId(dto.getId());
         entity.setCode(dto.getCode());
@@ -49,23 +49,23 @@ public class OrderCartConverter {
         entity.setTransportFree(dto.getTransportFree());
         entity.setStatus(dto.getStatus());
         entity.setPhoneCustomer(dto.getPhoneCustomer());
-        entity.setByCustomer(customerEntity);
+        entity.setByCustomer(customerConverter.DtoToEntity(dto.getCustomer()) );
         entity.setNote( dto.getNote());
         return  entity;
     }
-    public OrderCartEntity GetDtoToEntity(OrderCartDTO dto){
-        OrderCartEntity entity = new OrderCartEntity();
-        entity.setId(dto.getId());
-        entity.setCode(dto.getCode());
-        entity.setAddress(dto.getAddress());
-        entity.setNameCustomer(dto.getNameCustomer());
-        entity.setPayments(dto.getPayments());
-        entity.setTransportFree(dto.getTransportFree());
-        entity.setStatus(dto.getStatus());
-        entity.setPhoneCustomer(dto.getPhoneCustomer());
-        entity.setNote( dto.getNote());
-        return  entity;
-    }
+//    public OrderCartEntity GetDtoToEntity(OrderCartDTO dto){
+//        OrderCartEntity entity = new OrderCartEntity();
+//        entity.setId(dto.getId());
+//        entity.setCode(dto.getCode());
+//        entity.setAddress(dto.getAddress());
+//        entity.setNameCustomer(dto.getNameCustomer());
+//        entity.setPayments(dto.getPayments());
+//        entity.setTransportFree(dto.getTransportFree());
+//        entity.setStatus(dto.getStatus());
+//        entity.setPhoneCustomer(dto.getPhoneCustomer());
+//        entity.setNote( dto.getNote());
+//        return  entity;
+//    }
     public  OrderCartEntity updateOrderCart(String status, OrderCartEntity entity){
         entity.setStatus(status);
         return  entity;

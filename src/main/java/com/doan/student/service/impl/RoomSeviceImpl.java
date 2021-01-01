@@ -1,5 +1,6 @@
 package com.doan.student.service.impl;
 
+import com.doan.student.common.Constant;
 import com.doan.student.converter.RoomConverter;
 import com.doan.student.entity.RoomEntity;
 import com.doan.student.payload.dto.RoomDTO;
@@ -17,15 +18,27 @@ public class RoomSeviceImpl implements RoomService {
     private RoomRepository roomRepository;
     @Autowired
     private RoomConverter roomConverter;
+
     @Override
-    public RoomDTO saveRoom(RoomDTO roomDTO) {
-        return roomConverter.EntityToDto( roomRepository.save(roomConverter.DtoToEntity(roomDTO)));
+    public String saveRoom(RoomDTO roomDTO) {
+
+            try{
+                String code= Constant.convertCode(roomRepository.findFirstByOrderByIdDesc().getCode(), "RM-");
+                roomDTO.setCode(code);
+                roomRepository.save(roomConverter.DtoToEntity(roomDTO));
+                return  Constant.YES;
+            }
+            catch (Exception e){
+                return Constant.NO;
+            }
+
+
     }
 
     @Override
     public List<RoomDTO> getAllRoom() {
         List<RoomDTO> list= new ArrayList<>();
-        for (RoomEntity entity : roomRepository.findAll()) {
+        for (RoomEntity entity : roomRepository.findByStatus(Constant.ACTIVE)) {
             list.add( roomConverter.EntityToDto(entity));
         }
         return list;
@@ -34,6 +47,22 @@ public class RoomSeviceImpl implements RoomService {
     @Override
     public RoomEntity getOne(Long id) {
         return roomRepository.getOne(id);
+    }
+
+    @Override
+    public String updateStatus(Long id, String status) {
+        try{
+            roomRepository.updateRoomStatus(id, status);
+            return  Constant.YES;
+        }
+        catch (Exception e){
+            return Constant.NO;
+        }
+    }
+
+    @Override
+    public String existsByName(String name) {
+        return roomRepository.existsByName(name)? Constant.EXISTS: Constant.NO;
     }
 
 

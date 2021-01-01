@@ -1,13 +1,12 @@
 package com.doan.student.entity;
 
+import com.doan.student.common.Constant;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.persistence.Id;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -129,6 +128,11 @@ public class RoomEntity {
 
     public void setModifiedBy(UserEntity modifiedBy) {
         this.modifiedBy = modifiedBy;
+    }
+
+    @PrePersist
+    public void setPrevStatus(){
+        setStatus(Constant.STOP);
     }
 
 

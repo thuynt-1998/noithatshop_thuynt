@@ -17,8 +17,6 @@ public class OrderCartDetailEntity {
     private BigInteger number;
     @Column(name = "product_price")
     private BigDecimal price;
-    @Column(name= "status")
-    private String status;
     @ManyToOne
     @JoinColumn(name = "product_detail")
     private ProductDetailEntity productDetail;
@@ -51,13 +49,6 @@ public class OrderCartDetailEntity {
         this.number = number;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     public BigDecimal getPrice() {
         return price;
@@ -82,8 +73,5 @@ public class OrderCartDetailEntity {
     public void setOrderCart(OrderCartEntity orderCart) {
         this.orderCart = orderCart;
     }
-    @PrePersist
-    public void seetInit(){
-        setStatus("order");
-    }
+
 }

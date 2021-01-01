@@ -1,5 +1,6 @@
 package com.doan.student.service.impl;
 
+import com.doan.student.common.Constant;
 import com.doan.student.converter.OrderCartDetailConverter;
 import com.doan.student.payload.dto.OrderCartDTO;
 import com.doan.student.payload.dto.OrderCartDetailDTO;
@@ -16,9 +17,24 @@ public class OrderCartDetailServiceImpl implements OrderCartDetailService
     @Autowired
     private OrderCartDetailConverter converter;
     @Override
-    public OrderCartDetailDTO saveOrderCartDetail(OrderCartDetailDTO dto, OrderCartDTO dtoOrder) {
-        return existsByCode(dto.getCode()) =="true"?converter.EntityToDto(repository.findByCode(dto.getCode()))
-                : converter.EntityToDto(repository.save(converter.DtoToEntity(dto, dtoOrder)));
+    public String saveOrderCartDetail(OrderCartDetailDTO dto) {
+       if(repository.findAll().isEmpty()){
+           dto.setCode("OCD-00001");
+       }
+       else{
+           String code= Constant.convertCode(repository.findFirstByOrderByIdDesc().getCode(), "OCD-");
+           dto.setCode(code);
+       }
+       try{
+           repository.save(converter.DtoToEntity(dto));
+           return Constant.YES;
+       }
+       catch (Exception e){
+           return Constant.NO;
+       }
+
+
+
     }
 
     @Override
@@ -26,8 +42,4 @@ public class OrderCartDetailServiceImpl implements OrderCartDetailService
         return repository.existsByCode(code)?"true": "false";
     }
 
-    @Override
-    public OrderCartDetailDTO updateOrderCart(OrderCartDetailDTO dto) {
-        return converter.EntityToDto(repository.save(converter.updateEntity(dto, repository.getOne(dto.getId()))));
-    }
 }

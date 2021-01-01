@@ -1,7 +1,9 @@
 package com.doan.student.controller;
 
 import com.doan.student.payload.dto.CartDTO;
+import com.doan.student.payload.dto.CustomerDTO;
 import com.doan.student.service.CartServices;
+import com.doan.student.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +20,13 @@ import java.util.List;
 public class CartController {
     @Autowired
     private CartServices cartServices;
+    @Autowired
+    private CustomerService customerService;
     @PreAuthorize("hasRole('ROLE_CLIENT')")
     @PostMapping("/customer/choose/cart")
     public ResponseEntity<Object> saveCart(@Valid @RequestBody CartDTO dto){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        return new ResponseEntity<Object>(cartServices.saveCart(dto, authentication.getName()), HttpStatus.OK);
+        dto.setCustomer(getCustomer());
+        return new ResponseEntity<Object>(cartServices.saveCart(dto), HttpStatus.OK);
     }
     @PreAuthorize("hasRole('ROLE_CLIENT')")
     @PutMapping ("/customer/change/cart")
@@ -37,9 +40,12 @@ public class CartController {
     }
     @GetMapping("/customer/getAll/cart")
     public ResponseEntity<Object> getAll(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        return new ResponseEntity<Object>(cartServices.getAllCart(authentication.getName()), HttpStatus.OK);
+        return new ResponseEntity<Object>(cartServices.getAllCart(getCustomer()), HttpStatus.OK);
+    }
+    public CustomerDTO getCustomer(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return  customerService.getCustomerByUsername(authentication.getName());
     }
 
 }

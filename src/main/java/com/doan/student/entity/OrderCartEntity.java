@@ -17,6 +17,8 @@ import java.util.List;
 @Entity
 @Table(name = "order_cart" ,uniqueConstraints = {
         @UniqueConstraint(columnNames = "code", name = "uniqueCode")})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@EntityListeners(AuditingEntityListener.class)
 public class OrderCartEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,10 +36,16 @@ public class OrderCartEntity {
     @Column(name = "note")
     private String note;
     @Column(name = "payments")
-    private String payments;
+    private String payments;//phương thức thanh toán (paid, unpaid)
     @Column(name = "transport_free")
-    private BigDecimal transportFree;
-
+    private BigDecimal transportFree;//phí vận chuyển
+    @Column(name="sum_bill")
+    private  BigDecimal sumBill;//tổng hóa đơn
+    @Column(name = "paid_customer")
+    private BigDecimal paidCustomer;//số tiền khách đã trả
+    @Column(name = "modified_date")
+    @LastModifiedDate
+    private Date modifiedDate;
     @ManyToOne
     @JoinColumn(name = "by_customer")
     private CustomerEntity byCustomer;
@@ -119,6 +127,22 @@ public class OrderCartEntity {
         this.transportFree = transportFree;
     }
 
+    public BigDecimal getSumBill() {
+        return sumBill;
+    }
+
+    public void setSumBill(BigDecimal sumBill) {
+        this.sumBill = sumBill;
+    }
+
+    public BigDecimal getPaidCustomer() {
+        return paidCustomer;
+    }
+
+    public void setPaidCustomer(BigDecimal paidCustomer) {
+        this.paidCustomer = paidCustomer;
+    }
+
     public CustomerEntity getByCustomer() {
         return byCustomer;
     }
@@ -130,5 +154,13 @@ public class OrderCartEntity {
 
     public List<OrderCartDetailEntity> getOrderCartDetail() {
         return orderCartDetail;
+    }
+
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
     }
 }

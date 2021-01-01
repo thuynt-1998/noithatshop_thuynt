@@ -1,5 +1,7 @@
 package com.doan.student.payload.dto;
 
+import com.doan.student.payload.response.JwtAdminResponse;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -10,7 +12,7 @@ public class BillProviderDetailDTO {
     private BigDecimal price;
     private BillProviderDTO billProviderDTO;
     private ProductDetailDTO productDetail;
-
+    private JwtAdminResponse jwt ;
     public Long getId() {
         return id;
     }
@@ -57,5 +59,13 @@ public class BillProviderDetailDTO {
 
     public void setProductDetail(ProductDetailDTO productDetail) {
         this.productDetail = productDetail;
+    }
+
+    public JwtAdminResponse getJwt() {
+        return jwt;
+    }
+
+    public void setJwt(JwtAdminResponse jwt) {
+        this.jwt = jwt;
     }
 }

@@ -9,5 +9,5 @@ public interface CustomerService {
     CustomerDTO getCustomerByUsername(String username);
     String ExistsByAccount(String account);
     String deleteCustomer(String username);
-    CustomerDTO updateCustomer(CustomerDTO customerDTO);
+    String updateCustomer(CustomerDTO customerDTO);
 }

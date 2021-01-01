@@ -19,8 +19,7 @@ public class RoomController {
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     @PostMapping("admin/save/room")
     public ResponseEntity<Object> create(@Valid @RequestBody RoomDTO roomDTO){
-        RoomDTO roomDTO1= roomService.saveRoom(roomDTO);
-        return new ResponseEntity<Object>(roomDTO1, HttpStatus.OK);
+        return new ResponseEntity<Object>(roomService.saveRoom(roomDTO), HttpStatus.OK);
     }
     @GetMapping("/getAll/room")
     public ResponseEntity<List<RoomDTO>> getAllRoom(){

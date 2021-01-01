@@ -7,8 +7,9 @@ import java.util.List;
 
 @Transactional(rollbackFor = Exception.class)
 public interface ProductTypeServices {
-    ProductTypeDTO saveProductType(ProductTypeDTO productTypeDto);
+    String saveProductType(ProductTypeDTO productTypeDto);
     List<ProductTypeDTO> getAllProductType();
     List<ProductTypeDTO> getProductTypeByRoomId(Long id);
-    String existsByCode(String code);
+    String existsByName(String code);
+    String updateStatus(Long id, String status);
 }

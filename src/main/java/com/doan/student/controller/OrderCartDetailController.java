@@ -23,7 +23,7 @@ public class OrderCartDetailController {
     private OrderCartService orderCartService;
     @PutMapping("/update/order/cart/detail")
     public ResponseEntity<Object> updateCart(@Valid @RequestBody OrderCartDetailDTO dto){
-        return new ResponseEntity<Object>(orderCartDetailService.updateOrderCart(dto), HttpStatus.OK);
+        return new ResponseEntity<Object>("", HttpStatus.OK);
     }
 }
 

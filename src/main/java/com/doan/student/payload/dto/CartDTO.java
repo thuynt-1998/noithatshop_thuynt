@@ -12,7 +12,7 @@ public class CartDTO {
     private BigInteger number;
     private BigDecimal price;
     private String status;
-    private ProductDetailDTO productDetail;
+    private ProductDTO product;
     private CustomerDTO customer;
 
     public Long getId() {
@@ -55,12 +55,12 @@ public class CartDTO {
         this.status = status;
     }
 
-    public ProductDetailDTO getProductDetail() {
-        return productDetail;
+    public ProductDTO getProduct() {
+        return product;
     }
 
-    public void setProductDetail(ProductDetailDTO productDetail) {
-        this.productDetail = productDetail;
+    public void setProduct(ProductDTO product) {
+        this.product = product;
     }
 
     public CustomerDTO getCustomer() {

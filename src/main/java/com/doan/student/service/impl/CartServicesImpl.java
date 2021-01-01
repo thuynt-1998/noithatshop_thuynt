@@ -1,8 +1,12 @@
 package com.doan.student.service.impl;
 
+import com.doan.student.common.Constant;
 import com.doan.student.converter.CartConverter;
+import com.doan.student.converter.CustomerConverter;
 import com.doan.student.entity.CartEntity;
+import com.doan.student.entity.CustomerEntity;
 import com.doan.student.payload.dto.CartDTO;
+import com.doan.student.payload.dto.CustomerDTO;
 import com.doan.student.repository.CartRepository;
 import com.doan.student.repository.CustomerRepository;
 import com.doan.student.service.CartServices;
@@ -21,40 +25,59 @@ public class CartServicesImpl implements CartServices {
     private CartRepository repository;
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private CustomerConverter customerConverter;
     @Override
-    public CartDTO saveCart(CartDTO dto, String username) {
-        CartDTO cartDTO = new CartDTO();
-        if(findByCode(dto.getCode())=="true")
+    public String saveCart(CartDTO dto) {
+        if(repository.existsByCustomerCodeAndProductDetailCode(dto.getCustomer().getCode(), dto.getProduct().getProductDetail().get(0).getCode()))
         {
-            CartEntity cartEntity= repository.findByCode(dto.getCode());
-            BigInteger number = cartEntity.getNumber().add(dto.getNumber());
-            dto.setNumber(number);
-            dto.setId(cartEntity.getId());
-            cartDTO=cartConverter.EntityToDto(repository.save(cartConverter.updateEntity(dto,cartEntity) ));
+            CartEntity entity = repository.findByCustomerCodeAndProductDetailCode(dto.getCustomer().getCode(), dto.getProduct().getProductDetail().get(0).getCode());
+
+            repository.updateCartNumber(entity.getId(), entity.getNumber().add(dto.getNumber()));
+            return Constant.EXISTS;
         }
         else{
-            cartDTO= cartConverter.EntityToDto(repository.save(cartConverter.DtoToEntity(dto,customerRepository.findByUserEntityUsername(username))));
+            if(repository.findAll().isEmpty()){
+                dto.setCode("CR-00001");
+            }
+            else{
+                String code= Constant.convertCode(repository.findFirstByOrderByIdDesc().getCode(), "CR-");
+                dto.setCode(code);
 
+            }
+            repository.save(cartConverter.DtoToEntity(dto));
+            return Constant.YES;
         }
 
-        return cartDTO;
+
     }
 
     @Override
-    public CartDTO updateCart(CartDTO dto) {
-        return cartConverter.EntityToDto(repository.save(cartConverter.updateEntity(dto, repository.getOne(dto.getId()))));
+    public String updateCart(CartDTO dto) {
+        try {
+            repository.updateCartNumber(dto.getId(), dto.getNumber());
+            return  Constant.YES;
+        }
+        catch (Exception e){
+            return Constant.NO;
+        }
     }
 
     @Override
     public String deleteCart(Long id) {
-        repository.deleteById(id);
-        return "true";
+        try{
+            repository.deleteById(id);
+            return Constant.YES;
+        }
+        catch (Exception e){
+            return  Constant.NO;
+        }
     }
 
     @Override
-    public List<CartDTO> getAllCart(String account) {
+    public List<CartDTO> getAllCart(CustomerDTO account) {
         List<CartDTO> dtos = new ArrayList<>();
-        for ( CartEntity entity: repository.findByCustomer(customerRepository.findByUserEntityUsername(account))) {
+        for ( CartEntity entity: repository.findByCustomer(customerConverter.DtoToEntity( account))) {
             dtos.add(cartConverter.EntityToDto(entity));
         }
         return dtos;

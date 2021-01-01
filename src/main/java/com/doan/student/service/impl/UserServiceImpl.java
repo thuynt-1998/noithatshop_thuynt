@@ -1,5 +1,6 @@
 package com.doan.student.service.impl;
 
+import com.doan.student.common.Constant;
 import com.doan.student.entity.UserEntity;
 import com.doan.student.repository.UserRepository;
 import com.doan.student.service.JwtUserDetailsService;
@@ -35,15 +36,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String deleteUser(String username) {
-        userRepository.deleteByUsername(username);
-        return "true";
+        try{
+            userRepository.deleteByUsername(username);
+            return Constant.YES;
+        }
+        catch (Exception  e){
+            return Constant.NO;
+        }
+
     }
 
     @Override
     public String updatePassword(String password, String username) {
         UserEntity userEntity = userRepository.findByUsername(username).get();
         userEntity.setPassword(passwordEncoder.encode(password));
-        userRepository.save(userEntity);
-        return "yes";
+        try{
+            userRepository.save(userEntity);
+            return Constant.YES;
+        }
+        catch (Exception e){
+            return Constant.NO;
+        }
     }
 }

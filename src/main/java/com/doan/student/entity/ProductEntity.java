@@ -1,5 +1,6 @@
 package com.doan.student.entity;
 
+import com.doan.student.common.Constant;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedBy;
@@ -183,5 +184,11 @@ public class ProductEntity {
 
     public void setSize(String size) {
         this.size = size;
+    }
+
+
+    @PrePersist
+    public void setPrevStatus(){
+        setStatus(Constant.STOP);
     }
 }

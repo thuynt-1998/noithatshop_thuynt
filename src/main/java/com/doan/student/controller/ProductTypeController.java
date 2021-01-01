@@ -20,8 +20,7 @@ public class ProductTypeController {
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     @PostMapping("/admin/save/product-type")
     public ResponseEntity<Object> create(@Valid @RequestBody ProductTypeDTO productTypeDto){
-        ProductTypeDTO roomDTO1= productTypeServices.saveProductType(productTypeDto);
-        return new ResponseEntity<Object>(roomDTO1, HttpStatus.OK);
+        return new ResponseEntity<Object>(productTypeServices.saveProductType(productTypeDto), HttpStatus.OK);
     }
     @GetMapping("/admin/getAll/product-type")
     public ResponseEntity<List<ProductTypeDTO>> getAllRoom(){

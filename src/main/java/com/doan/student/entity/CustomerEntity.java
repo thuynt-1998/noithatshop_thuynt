@@ -1,5 +1,7 @@
 package com.doan.student.entity;
 
+import com.doan.student.common.Constant;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -23,6 +25,8 @@ public class CustomerEntity {
     private Date dateOfBirth;
     @Column(name = "gender")
     private String gender;
+    @Column(name = "status")
+    private String status;
     @OneToOne
     @JoinColumn(name = "user_id")
     private UserEntity  userEntity;
@@ -89,5 +93,18 @@ public class CustomerEntity {
 
     public void setUserEntity(UserEntity userEntity) {
         this.userEntity = userEntity;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @PrePersist
+    public void setPrevStatus(){
+        setStatus(Constant.ACTIVE);
     }
 }

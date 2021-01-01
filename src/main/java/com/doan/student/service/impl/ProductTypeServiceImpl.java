@@ -1,5 +1,6 @@
 package com.doan.student.service.impl;
 
+import com.doan.student.common.Constant;
 import com.doan.student.converter.ProductTypeConverter;
 import com.doan.student.entity.ProductTypeEntity;
 import com.doan.student.payload.dto.ProductTypeDTO;
@@ -17,9 +18,17 @@ public class ProductTypeServiceImpl implements ProductTypeServices {
     @Autowired
     private ProductTypeConverter productTypeConverter;
     @Override
-    public ProductTypeDTO saveProductType(ProductTypeDTO productTypeDto) {
-        return existsByCode(productTypeDto.getCode())=="false" ? productTypeConverter.EntityToDto(productTypeRepository.save(productTypeConverter.DtoToEntity(productTypeDto)))
-                :productTypeDto;
+    public String saveProductType(ProductTypeDTO productTypeDto) {
+            try
+            {
+                String code= Constant.convertCode(productTypeRepository.findFirstByOrderByIdDesc().getCode(), "PT-");
+                productTypeDto.setCode(code);
+                 productTypeRepository.save(productTypeConverter.DtoToEntity(productTypeDto));
+                 return Constant.YES;
+            }
+            catch (Exception e){
+                return  Constant.NO;
+            }
     }
 
     @Override
@@ -34,7 +43,7 @@ public class ProductTypeServiceImpl implements ProductTypeServices {
     @Override
     public List<ProductTypeDTO> getProductTypeByRoomId(Long id) {
         List<ProductTypeDTO> list =new ArrayList<>();
-        for(ProductTypeEntity entity : productTypeRepository.findByRoomId(id))
+        for(ProductTypeEntity entity : productTypeRepository.findByRoomIdAndStatus(id, Constant.ACTIVE))
         {
             list.add(productTypeConverter.EntityToDto(entity));
         }
@@ -42,8 +51,19 @@ public class ProductTypeServiceImpl implements ProductTypeServices {
     }
 
     @Override
-    public String existsByCode(String code) {
-        return productTypeRepository.existsByCode(code)? "true":"false";
+    public String existsByName(String name) {
+        return productTypeRepository.existsByName(name)? Constant.EXISTS:Constant.NO;
+    }
+
+    @Override
+    public String updateStatus(Long id, String status) {
+        try{
+            productTypeRepository.updateRoomStatus(id, status);
+            return Constant.YES;
+        }
+        catch (Exception e){
+            return Constant.NO;
+        }
     }
 
 

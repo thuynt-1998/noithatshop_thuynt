@@ -20,7 +20,7 @@ public class BillProviderDetailConverter {
         dto.setPrice(entity.getPrice());
         dto.setNumber(entity.getNumber());
         dto.setBillProviderDTO(billProviderConverter.EntityToDto(entity.getBillProvider()));
-        dto.setProductDetail(productDetailConverter.EntityToDto(entity.getProductDetail()));
+        dto.setProductDetail(productDetailConverter.EntityToDtoResponse(entity.getProductDetail()));
         return dto;
     }
     public  BillProviderDetailEntity DtoToEntity(BillProviderDetailDTO dto, BillProviderDTO billProviderDTO){
@@ -31,7 +31,7 @@ public class BillProviderDetailConverter {
         entity.setPrice(dto.getPrice());
 
         entity.setBillProvider(billProviderConverter.DtoToEntity(billProviderDTO));
-        entity.setProductDetail(productDetailConverter.DtoToEntity(dto.getProductDetail(),dto.getProductDetail().getProduct()));
+        entity.setProductDetail(productDetailConverter.DtoToEntity(dto.getProductDetail()));
         return entity;
     }
     public BillProviderDetailEntity DtoToEntityExists(BillProviderDetailDTO dto, BillProviderDetailEntity entity)

@@ -9,9 +9,8 @@ public class OrderCartDetailDTO {
     private BigInteger number;
     private BigDecimal price;
     private String status;
-    private ProductDetailDTO productDetail;
+    private ProductDTO product;
     private OrderCartDTO orderCart;
-    private CartDTO cart;
 
 
     public Long getId() {
@@ -46,12 +45,12 @@ public class OrderCartDetailDTO {
         this.price = price;
     }
 
-    public ProductDetailDTO getProductDetail() {
-        return productDetail;
+    public ProductDTO getProduct() {
+        return product;
     }
 
-    public void setProductDetail(ProductDetailDTO productDetail) {
-        this.productDetail = productDetail;
+    public void setProduct(ProductDTO product) {
+        this.product = product;
     }
 
     public OrderCartDTO getOrderCart() {
@@ -70,12 +69,6 @@ public class OrderCartDetailDTO {
         this.status = status;
     }
 
-    public CartDTO getCart() {
-        return cart;
-    }
 
-    public void setCart(CartDTO cart) {
-        this.cart = cart;
-    }
 
 }

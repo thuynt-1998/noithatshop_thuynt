@@ -3,10 +3,14 @@ package com.doan.student.converter;
 import com.doan.student.entity.CustomerEntity;
 import com.doan.student.entity.UserEntity;
 import com.doan.student.payload.dto.CustomerDTO;
+import com.doan.student.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CustomerConverter {
+    @Autowired
+    private UserRepository repository;
     public CustomerDTO EntityToDto(CustomerEntity entity){
         CustomerDTO dto = new CustomerDTO();
         dto.setId(entity.getId());
@@ -28,6 +32,7 @@ public class CustomerConverter {
         entity.setDateOfBirth(dto.getDateOfBirth());
         entity.setAddress(dto.getAddress());
         entity.setCode(dto.getCode());
+        entity.setUserEntity(repository.findByUsername(dto.getUsername()).get());
         return entity;
     }
     public CustomerEntity DtoToEntityExists(CustomerDTO dto, CustomerEntity entity){
@@ -40,16 +45,5 @@ public class CustomerConverter {
         entity.setCode(dto.getCode());
         return entity;
     }
-    public  CustomerEntity updateEntity(CustomerDTO dto, UserEntity userEntity){
-        CustomerEntity entity = new CustomerEntity();
-        entity.setId(dto.getId());
-        entity.setCode(dto.getCode());
-        entity.setAddress(dto.getAddress());
-        entity.setAccount(dto.getAccount());
-        entity.setDateOfBirth(dto.getDateOfBirth());
-        entity.setGender(dto.getGender());
-        entity.setName(entity.getName());
-        entity.setUserEntity(userEntity);
-        return  entity;
-    }
+
 }
