@@ -1,7 +1,9 @@
 package com.doan.student.converter;
 
+import com.doan.student.entity.ProductEntity;
 import com.doan.student.entity.ProductTypeEntity;
 import com.doan.student.entity.RoomEntity;
+import com.doan.student.payload.dto.ProductDTO;
 import com.doan.student.payload.dto.ProductTypeDTO;
 import com.doan.student.payload.dto.RoomDTO;
 import com.doan.student.repository.ProductTypeRepository;
@@ -18,6 +20,8 @@ import java.util.Set;
 public class ProductTypeConverter {
     @Autowired
     private ProductTypeRepository productTypeRepository;
+    @Autowired
+    private ProductConverter productConverter;
     @Autowired
     private RoomService roomService;
     public ProductTypeEntity DtoToEntity(ProductTypeDTO dto)
@@ -44,6 +48,13 @@ public class ProductTypeConverter {
         dto.setImage(entity.getImage());
         dto.setName(entity.getName());
         dto.setStatus(entity.getStatus());
+        List<ProductDTO> product= new ArrayList<>();
+        for (ProductEntity entityPro : entity.getProduct())
+        {
+            product.add(productConverter.EntityToDto(entityPro));
+        }
+        dto.setProduct(product);
+
         return dto;
     }
 
