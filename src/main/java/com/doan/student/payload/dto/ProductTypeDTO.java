@@ -14,7 +14,6 @@ public class ProductTypeDTO {
    private  String name;
    private  String image;
    private List<RoomDTO> rooms;
-   private List<ProductDTO> product;
    @NotBlank
    private String status;
 
@@ -74,11 +73,5 @@ public class ProductTypeDTO {
         this.idRooms = idRooms;
     }
 
-    public List<ProductDTO> getProduct() {
-        return product;
-    }
 
-    public void setProduct(List<ProductDTO> product) {
-        this.product = product;
-    }
 }
