@@ -40,7 +40,6 @@ public class CartController {
     }
     @GetMapping("/customer/getAll/cart")
     public ResponseEntity<Object> getAll(){
-
         return new ResponseEntity<Object>(cartServices.getAllCart(getCustomer()), HttpStatus.OK);
     }
     public CustomerDTO getCustomer(){
